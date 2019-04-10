@@ -43,6 +43,7 @@ script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       pwd;
       ls;
+      flask run;
       pytest --cov=bonsai_api;
       coveralls;
       if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
