@@ -33,7 +33,6 @@ would output:
         "Acidification": [
             {"impact": 1.2e-2, "unit": "kg SO2-eq."}
         ]
-
       }
     ]
 ```
