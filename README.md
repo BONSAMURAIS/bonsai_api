@@ -1,4 +1,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/BONSAMURAIS/bonsai_api/badge.svg?branch=master)](https://coveralls.io/github/BONSAMURAIS/bonsai_api?branch=master) [![Build Status](https://travis-ci.org/BONSAMURAIS/bonsai_api.svg?branch=master)](https://travis-ci.org/BONSAMURAIS/bonsai_api)
+
+https://ci.appveyor.com/api/projects/status/github/BONSAMURAIS/bonsai_api
 # Bonsai API
 ## Documentation
 See [documentation](https://bonsamurais.github.io/bonsai_api/build/html/index.html).
