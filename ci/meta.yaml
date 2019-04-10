@@ -1,5 +1,5 @@
 package:
-  name: bonsai_api-dev
+  name: bonsai_api
   version: {{ environ['VERSION'] }}
 
 source:
@@ -24,7 +24,7 @@ requirements:
 
 test:
   imports:
-    - {{ name }}
+    - bonsai_api
 
 about:
   home: https://github.com/BONSAMURAIS/
