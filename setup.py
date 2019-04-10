@@ -7,13 +7,6 @@ if root_dir:
     os.chdir(root_dir)
 
 
-# TODO
-# Change every instance of `bonsai_api` to the name of your library.
-# Change `author`
-# Change `author_email`
-# Change `url`
-# Change the PyPI classifiers: https://pypi.org/pypi?%3Aaction=list_classifiers
-
 
 # Probably should be changed, __init__.py is no longer required for Python 3
 for dirpath, dirnames, filenames in os.walk('bonsai_api'):
@@ -45,8 +38,11 @@ setup(
     install_requires=[
         'appdirs',
         'docopt',
+        'flask',
+        'flask-restful',
+        'sparqlwrapper'
     ],
-    url="https://github.com/BONSAMURAIS/",
+    url="https://github.com/BONSAMURAIS/bonsai_api",
     long_description=open('README.md').read(),
     description='Romain Sacchi',
     classifiers=[
