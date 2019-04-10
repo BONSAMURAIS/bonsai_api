@@ -19,7 +19,7 @@ requirements:
     - setuptools
   run:
     - python
-    - appdirs flask flask-restful sparqlwrapper
+    - appdirs
 
 
 test:
