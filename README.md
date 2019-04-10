@@ -50,7 +50,7 @@ We foresee **bonsai_api** to work together with:
 ## Install
 Clone the repository
 
-    git clone https://github.com/BONSAMURAIS/bonsai_web_api
+    git clone https://github.com/BONSAMURAIS/bonsai_api
 
 Create a virtual environment and activate it
 
