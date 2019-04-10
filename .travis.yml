@@ -44,7 +44,7 @@ script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       pwd;
       ls;
-      pytest;
+      pytest --cov=bonsai_api;
       coveralls;
       if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
         conda install conda-build anaconda-client conda-verify;
