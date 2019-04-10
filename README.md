@@ -7,11 +7,13 @@ The idea is to give users easy-to-use endpoints to quickly query data from the B
 For example, using a Python interpreter:
 
     import requests
-    r = requests.post('http://api.bonsai.uno/do_lca/', json={"functional unit": [("http://rdf.bonsai.uno/someUri1",1.0,"kilogram"), ("http://rdf.bonsai.uno/someUri2",1.0,"kilogram")],
-    "method":"CML 2001", "algorithm":"attributional"})
+    r = requests.post('http://api.bonsai.uno/do_lca/',
+        json={"functional unit": [("http://rdf.bonsai.uno/someUri1",1.0,"kilogram"), ("http://rdf.bonsai.uno/someUri2",1.0,"kilogram")],
+        "method":"CML 2001", "algorithm":"attributional"})
     r.json()
     
 would output:
+```json
     [
       {"uri": "http://rdf.bonsai.uno/someUri1", "label": "Electricity production, coal"}: {
         "Global Warming Potential 100a": [
@@ -31,6 +33,7 @@ would output:
 
       }
     ]
+```
     
 
 We foresee this API to work together with:
