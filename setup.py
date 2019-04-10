@@ -39,7 +39,7 @@ setup(
         'docopt',
         'flask',
         'flask-restful',
-        'sparqlwrapper'
+        'sparqlwrapper',
     ],
     tests_require = [
     'pytest'
