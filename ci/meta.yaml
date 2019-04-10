@@ -20,6 +20,10 @@ requirements:
   run:
     - python
     - appdirs
+    - flask
+    - flask-restful
+    - sparqlwrapper
+    - pytest
 
 
 test:
@@ -29,5 +33,5 @@ test:
 about:
   home: https://github.com/BONSAMURAIS/
   license: BSD License
-  summary: '<One line description>'
+  summary: 'BONSAI API to serve LCA results'
 license_family: BSD

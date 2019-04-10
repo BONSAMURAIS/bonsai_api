@@ -1,0 +1,4 @@
+appdirs
+flask
+flask-restful
+sparqlwrapper
