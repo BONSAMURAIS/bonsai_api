@@ -38,7 +38,7 @@ would output:
 ```
     
 
-We foresee this API to work together with:
+We foresee **bonsai_api** to work together with:
 * **bonsai_web_app**, a server-based LCA calculation module that receives requests from bonsai_api,
 * **bonsai_web_interface**, a graphical user interface to make and visualize LCA calculations
 * **the BONSAI database**
