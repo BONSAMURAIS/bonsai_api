@@ -44,7 +44,7 @@ setup(
     ],
     tests_require = [
     'pytest'
-    ]
+    ],
     url="https://github.com/BONSAMURAIS/bonsai_api",
     long_description=open('README.md').read(),
     description='Romain Sacchi',
