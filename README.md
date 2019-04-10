@@ -1,4 +1,7 @@
 # Bonsai API
+## Documentation
+See [documentation](https://bonsamurais.github.io/bonsai_api/build/html/index.html).
+
 ## What is it?
 This is a Flask API using Flask-RESTful that serves requests on the BONSAI graph database and LCA results.
 
@@ -41,7 +44,7 @@ We foresee this API to work together with:
 * **bonsai_web_interface**, a graphical user interface to make and visualize LCA calculations
 * **the BONSAI database**
 
-See [documentation](https://bonsamurais.github.io/bonsai_api/build/html/index.html).
+
 ![alt text](https://github.com/BONSAMURAIS/bonsai_web_api/blob/master/bonsai_web_api/static/pictures/bonsai_web_api_diagram.png)
 
 
