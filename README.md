@@ -1,3 +1,4 @@
+[![Coverage Status](https://coveralls.io/repos/github/BONSAMURAIS/bonsai_api/badge.svg?branch=master)](https://coveralls.io/github/BONSAMURAIS/bonsai_api?branch=master)
 # Bonsai API
 ## Documentation
 See [documentation](https://bonsamurais.github.io/bonsai_api/build/html/index.html).
@@ -44,13 +45,13 @@ We foresee **bonsai_api** to work together with:
 * **the BONSAI database**
 
 
-![alt text](https://github.com/BONSAMURAIS/bonsai_web_api/blob/master/bonsai_web_api/static/pictures/bonsai_web_api_diagram.png)
+![alt text](https://github.com/BONSAMURAIS/bonsai_api/blob/master/docs/bonsai_app_flow_diagram.png)
 
 
 ## Install
 Clone the repository
 
-    git clone https://github.com/BONSAMURAIS/bonsai_web_api
+    git clone https://github.com/BONSAMURAIS/bonsai_api
 
 Create a virtual environment and activate it
 
