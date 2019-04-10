@@ -39,6 +39,7 @@ install:
 before_script:
   - export FLASK_APP=bonsai_api
   - export FLASK_ENV=development
+  - export PYTHONPATH=../.
 script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       pwd;
