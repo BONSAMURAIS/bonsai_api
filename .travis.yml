@@ -37,13 +37,12 @@ install:
       pip3 install -e .;
     fi
 before_script:
-  - export FLASK_APP="bonsai_api"
+  - export FLASK_APP=bonsai_api
   - export FLASK_ENV=development
 script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       pwd;
       ls;
-      flask run;
       pytest --cov=bonsai_api;
       coveralls;
       if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then

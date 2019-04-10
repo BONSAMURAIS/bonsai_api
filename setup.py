@@ -33,8 +33,7 @@ setup(
     author="Romain Sacchi",
     author_email="r_s@me.com",
     license=open('LICENSE').read(),
-    # Only if you have non-python data (CSV, etc.). Might need to change the directory name as well.
-    # package_data={'your_name_here': package_files(os.path.join('bonsai_api', 'data'))},
+    
     install_requires=[
         'appdirs',
         'docopt',
