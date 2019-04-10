@@ -36,6 +36,8 @@ install:
       pip3 install -r ci/macos-travis.txt;
       pip3 install -e .;
     fi
+before_script:
+  - export FLASK_APP="bonsai_api"
 script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       pwd;
