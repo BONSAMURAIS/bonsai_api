@@ -1,5 +1,5 @@
 # Only need to change these two variables
-PKG_NAME=bonsai_api-dev
+PKG_NAME=bonsai_api
 USER=romainsacchi
 
 mkdir ~/conda-bld
