@@ -41,17 +41,17 @@
 </div>
 <div class="section" id="how-to-use-it">
 <h2>How to use it?<a class="headerlink" href="#how-to-use-it" title="Permalink to this headline">¶</a></h2>
-<p>From a Python environment, querying the first 5 products in the BONSAI database, sorted by label, would look like:</p>
+<p>From a Python environment, querying the first 5 activities in the BONSAI database, sorted by label, would look like:</p>
 <blockquote>
 <div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://api.bonsai.uno/products/&#39;</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;lim&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;sort&quot;</span><span class="p">:</span><span class="s2">&quot;label&quot;</span><span class="p">})</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://api.bonsai.uno/activities/&#39;</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;lim&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;sort&quot;</span><span class="p">:</span><span class="s2">&quot;label&quot;</span><span class="p">})</span>
 <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </pre></div>
 </div>
 </div></blockquote>
 <dl class="docutils">
 <dt>Or from a console, for example using curl:</dt>
-<dd><div class="first last highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">curl http://127.0.0.1:5000/activities/?lim=5&amp;sort=label</span>
+<dd><div class="first last highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">curl https://api.bonsai.uno/activities/?lim=5&amp;sort=label</span>
 </pre></div>
 </div>
 </dd>

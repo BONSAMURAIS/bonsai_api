@@ -10,23 +10,23 @@ The API should become the intermediary between the database, the LCA calculation
 How to use it?
 --------------
 
-From a Python environment, querying the first 5 products in the BONSAI database, sorted by label, would look like:
+From a Python environment, querying the first 5 activities in the BONSAI database, sorted by label, would look like:
 
     .. highlight:: python
     .. code-block:: python
 
         import requests
-        r = requests.get('https://api.bonsai.uno/products/', params = {'lim':5, "sort":"label"})
+        r = requests.get('https://api.bonsai.uno/activities/', params = {'lim':5, "sort":"label"})
         r.json()
         
 Or from a console, for example using curl:
     .. code-block:: console
         
-        curl http://127.0.0.1:5000/activities/?lim=5&sort=label
+        curl https://api.bonsai.uno/activities/?lim=5&sort=label
 
 Both would print out:
 
-    .. code-block:: http
+    .. sourcecode:: http
 
       HTTP/1.1 200 OK
       Vary: Accept

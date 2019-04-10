@@ -1,1 +1,444 @@
-<meta http-equiv="refresh" content="0; url=./build/html/index.html" />
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>API Documentation &#8212; bonsai_api 0.1dev documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="api-documentation">
+<h1>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
+<p><strong>bonsai_api</strong> allows users to quickly query data from the BONSAI graph database. It is an <em>application programming interface</em> (API) based on <em>representational state transfer</em> (REST) services. It requires simple resource-oriented URLs, returns JSON-encoded responses and uses standard HTTP response codes. Queries on activities are using the GET method. Queries on LCA calculations are using the POST method. They do not require authentication.</p>
+<div class="section" id="objective">
+<h2>Objective<a class="headerlink" href="#objective" title="Permalink to this headline">¶</a></h2>
+<p>The API should become the intermediary between the database, the LCA calculation module and the users. Upon completion, <strong>bonsai_api</strong> is destined to be queried by users’ own applications as well as providing data to the Bonsai graphical user interface.</p>
+</div>
+<div class="section" id="how-to-use-it">
+<h2>How to use it?<a class="headerlink" href="#how-to-use-it" title="Permalink to this headline">¶</a></h2>
+<p>From a Python environment, querying the first 5 activities in the BONSAI database, sorted by label, would look like:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;https://api.bonsai.uno/activities/&#39;</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;lim&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;sort&quot;</span><span class="p">:</span><span class="s2">&quot;label&quot;</span><span class="p">})</span>
+<span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>Or from a console, for example using curl:</dt>
+<dd><div class="first last highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">curl https://api.bonsai.uno/activities/?lim=5&amp;sort=label</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>Both would print out:</p>
+<blockquote>
+<div><div class="highlight-http notranslate"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: application/json
+
+[
+  {&#39;label&#39;: &#39;Activities auxiliary to financial intermediation (67)&#39;,
+    &#39;uri&#39;: &#39;http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_FAUX&#39;},
+  {&#39;label&#39;: &#39;Activities of membership organisation n.e.c. (91)&#39;,
+    &#39;uri&#39;: &#39;http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_ORGA&#39;},
+  {&#39;label&#39;: &#39;Air transport (62)&#39;,
+    &#39;uri&#39;: &#39;http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_TAIR&#39;},
+  {&#39;label&#39;: &#39;Aluminium production&#39;,
+    &#39;uri&#39;: &#39;http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_ALUM&#39;},
+  {&#39;label&#39;: &#39;Animal products nec&#39;,
+    &#39;uri&#39;: &#39;http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_OANP&#39;}
+]
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="summary-of-queries">
+<h2>Summary of queries<a class="headerlink" href="#summary-of-queries" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="45%" />
+<col width="35%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Resource</th>
+<th class="head">Operation</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Activities list query</td>
+<td><a class="reference external" href="#get--activities-">GET /activities/</a></td>
+<td>Get list of available activities.</td>
+</tr>
+<tr class="row-odd"><td>Flows list query</td>
+<td><a class="reference external" href="#get--activity_relations-(path-parameter)">GET /activity_relations/(path:parameter)</a></td>
+<td>Get list of flows related to a specified activity.</td>
+</tr>
+<tr class="row-even"><td>LCA results query</td>
+<td><a class="reference external" href="#post--do_lca-">POST /do_lca/</a></td>
+<td>Get impacts for a specified functional unit.</td>
+</tr>
+<tr class="row-odd"><td>Search activities query</td>
+<td><a class="reference external" href="#get--search_activities-by_label-(path-parameter)">GET /search_activities/by_label/(path:parameter)</a></td>
+<td>Get list of activities that match search criteria.</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><a class="reference external" href="#get--search_activities-by_uri-(path-parameter)">GET /search_activities/by_uri/(path:parameter)</a></td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="api-details">
+<h2>API Details<a class="headerlink" href="#api-details" title="Permalink to this headline">¶</a></h2>
+<dl class="get">
+<dt id="get--activities-">
+<code class="descname">GET </code><code class="descname">/activities/</code><a class="headerlink" href="#get--activities-" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of activities contained in the BONSAI database.</p>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/search_activities/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.bonsai.uno</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: application/json
+
+[
+    {&quot;uri&quot;: &quot;http://rdf.bonsai.uno/activitytype/core/eg&quot;, &quot;label&quot;: &quot;Electricity grid&quot;},
+    {&quot;uri&quot;: &quot;http://rdf.bonsai.uno/activitytype/core/em&quot;, &quot;label&quot;: &quot;Market for electricity&quot;},
+    {&quot;uri&quot;: &quot;http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_ALUM&quot;, &quot;label&quot;: &quot;Aluminium production&quot;},
+    ...
+]
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Query Parameters:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first simple">
+<li><strong>sort</strong> – sorts by alphabetical order, based on URI or label. Possible values: sort=uri, sort=label.</li>
+<li><strong>lim</strong> – limits the length of results, of type integer (e.g., 10). Possible values: between 0 and 1000. Defaults to 100.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Response Headers:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-3.1.1.5">Content-Type</a> – application/json</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Activities found</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Bad request on client side (e.g., invalid parameters)</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a> – Resource does not exist in the database</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Internal server error</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal notranslate"><span class="pre">flask.response_class</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="post">
+<dt id="post--do_lca-">
+<code class="descname">POST </code><code class="descname">/do_lca/</code><a class="headerlink" href="#post--do_lca-" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of impacts for one or several functional units specified.</p>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">POST</span> <span class="nn">/do_lca/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.bonsai.uno</span>
+</pre></div>
+</div>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/search_activities/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.bonsai.uno</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Request Headers:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-5.3.2">Accept</a> – application/json</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Request JSON Object:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body"><ul class="first last simple">
+<li><strong>functional unit</strong> (<em>List[tuple]</em>) – specifies one or several functional units of format (string, float, string) (e.g., [(“<a class="reference external" href="http://rdf.bonsai.uno/someUri1">http://rdf.bonsai.uno/someUri1</a>”,1.0,”kilogram”), (“<a class="reference external" href="http://rdf.bonsai.uno/someUri2">http://rdf.bonsai.uno/someUri2</a>”,1.0,”kilogram”),…])</li>
+<li><strong>method</strong> (<em>string</em>) – specifies the impact method (e.g., “CML 2001”)</li>
+<li><strong>algorithm</strong> (<em>string</em>) – specifies the linking algorithm (e.g., “attributional”)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: application/json
+
+[
+    {&quot;uri&quot;: &quot;http://rdf.bonsai.uno/someUri1&quot;, &quot;label&quot;: &quot;Electricity production, coal&quot;}: {
+      &quot;Global Warming Potential 100a&quot;: [
+          {&quot;impact&quot;: 0.102, &quot;unit&quot;: &quot;kg CO2-eq.&quot;}
+      ],
+      &quot;Acidification&quot;: [
+          {&quot;impact&quot;: 1.2e-5, &quot;unit&quot;: &quot;kg SO2-eq.&quot;}
+      ]
+    
+    },
+    {&quot;uri&quot;: &quot;http://rdf.bonsai.uno/someUri2&quot;, &quot;label&quot;: &quot;Electricity production, nuclear&quot;}: {
+      &quot;Global Warming Potential 100a&quot;: [
+          {&quot;impact&quot;: 0.02, &quot;unit&quot;: &quot;kg CO2-eq.&quot;}
+      ],
+      &quot;Acidification&quot;: [
+          {&quot;impact&quot;: 1.2e-2, &quot;unit&quot;: &quot;kg SO2-eq.&quot;}
+      ]
+    
+    }
+]
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Response Headers:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-3.1.1.5">Content-Type</a> – application/json</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Activity found</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Bad request on client side (e.g., invalid parameters)</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a> – Resource does not exist in the database</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Internal server error</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal notranslate"><span class="pre">flask.response_class</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--search_activities-by_label-(path-parameter)">
+<code class="descname">GET </code><code class="descname">/search_activities/by_label/</code><span class="sig-paren">(</span><em class="property">path: </em><em>parameter</em><span class="sig-paren">)</span><a class="headerlink" href="#get--search_activities-by_label-(path-parameter)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="get">
+<dt id="get--search_activities-by_uri-(path-parameter)">
+<code class="descname">GET </code><code class="descname">/search_activities/by_uri/</code><span class="sig-paren">(</span><em class="property">path: </em><em>parameter</em><span class="sig-paren">)</span><a class="headerlink" href="#get--search_activities-by_uri-(path-parameter)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of one or several activities in the BONSAI database for which the label or URI contains the specified substring.</p>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span>GET /search_activities/by_label/cement HTTP/1.1
+GET /search_activities/by_uri/ALU HTTP/1.1
+Host: api.bonsai.uno
+Accept: application/json
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Vary</span><span class="o">:</span> <span class="l">Accept</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+    <span class="p">{</span><span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_CMNT&quot;</span><span class="p">,</span> <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Manufacture of cement, lime and plaster&quot;</span><span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Query Parameters:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first simple">
+<li><strong>sort</strong> – sorts by alphabetical order, based on URI or label. Possible values: sort=uri, sort=label.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Response Headers:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-3.1.1.5">Content-Type</a> – application/json</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Activity found</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Bad request on client side (e.g., invalid parameters)</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a> – Resource does not exist in the database</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Internal server error</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal notranslate"><span class="pre">flask.response_class</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--activity_relations-(path-parameter)">
+<code class="descname">GET </code><code class="descname">/activity_relations/</code><span class="sig-paren">(</span><em class="property">path: </em><em>parameter</em><span class="sig-paren">)</span><a class="headerlink" href="#get--activity_relations-(path-parameter)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of activity flows that are <em>input of</em> and <em>output of</em> the specified activity.</p>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span><span class="nf">GET</span> <span class="nn">/search_relations/http://rdf.bonsai.uno/activitytype/core/eg</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">api.bonsai.uno</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span>HTTP/1.1 200 OK
+Vary: Accept
+Content-Type: application/json
+
+[
+    {&quot;uri&quot;: &quot;http://rdf.bonsai.uno/activitytype/core/eg&quot;, &quot;label&quot;: &quot;Electricity grid&quot;}: {
+      &quot;isInputOf&quot;: [
+          {&quot;uri&quot;: &quot;http://rdf.bonsai.uno/activitytype/core/someUri1&quot;, &quot;label&quot;: &quot;Some label1&quot;},
+          {&quot;uri&quot;: &quot;http://rdf.bonsai.uno/activitytype/core/someUri2&quot;, &quot;label&quot;: &quot;Some label2&quot;},
+          ...
+      ],
+      &quot;isOutputOf&quot;: [
+          {&quot;uri&quot;: &quot;http://rdf.bonsai.uno/activitytype/core/someUri1&quot;, &quot;label&quot;: &quot;Some label3&quot;},
+          {&quot;uri&quot;: &quot;http://rdf.bonsai.uno/activitytype/core/someUri2&quot;, &quot;label&quot;: &quot;Some label4&quot;},
+          ...
+      ]
+    
+    }
+]
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Response Headers:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="https://tools.ietf.org/html/rfc7231#section-3.1.1.5">Content-Type</a> – application/json</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">200 OK</a> – Activity found</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">400 Bad Request</a> – Bad request on client side (e.g., invalid parameters)</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">404 Not Found</a> – Resource does not exist in the database</li>
+<li><a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">500 Internal Server Error</a> – Internal server error</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal notranslate"><span class="pre">flask.response_class</span></code></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">bonsai_api</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Romain Sacchi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
