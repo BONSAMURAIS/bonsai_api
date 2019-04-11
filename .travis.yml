@@ -47,10 +47,6 @@ script:
       ls;
       pytest --cov=bonsai_api;
       coveralls;
-      if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
-        conda install conda-build anaconda-client conda-verify;
-        bash ci/conda_upload.sh;
-      fi
     else
       pytest;
     fi
