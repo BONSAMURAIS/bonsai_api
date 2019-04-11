@@ -7,46 +7,8 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 import json
 
 
-
-
-
-
 """Search for activities."""
-
-
 def getSearchActivityByLabel(substring):
-    """Returns a list of one or several activities in the BONSAI database for which the label contains the specified substring.
-
-    .. :quickref: Search activities query; Get list of activities that match search criteria.
-
-    **Example request**:
-
-    .. sourcecode:: http
-
-      GET /search_activities/by_label/cement HTTP/1.1
-      Host: api.bonsai.uno
-      Accept: application/json
-
-    **Example response**:
-
-    .. sourcecode:: http
-
-      HTTP/1.1 200 OK
-      Vary: Accept
-      Content-Type: application/json
-
-      [
-          {"uri": "http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_CMNT", "name": "Manufacture of cement, lime and plaster"}
-      ]
-
-    :resheader Content-Type: application/json
-    :status 200: Activity found
-    :status 400: Bad request on client side (e.g., invalid parameters)
-    :status 404: Resource does not exist in the database
-    :status 500: Internal server error
-    :returns: :class:`flask.response_class`
-    """
-
 
     query = """
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -79,38 +41,6 @@ def getSearchActivityByLabel(substring):
 
 
 def getSearchActivityByUri(substring):
-    """Returns a list of one or several activities in the BONSAI database for which the URI contains the specified substring.
-
-    .. :quickref: Search activities query; Get list of activities that match search criteria.
-
-    **Example request**:
-
-    .. sourcecode:: http
-
-      GET /activities/by_uri/CEM HTTP/1.1
-      Host: api.bonsai.uno
-      Accept: application/json
-
-    **Example response**:
-
-    .. sourcecode:: http
-
-      HTTP/1.1 200 OK
-      Vary: Accept
-      Content-Type: application/json
-
-      [
-          {"uri": "http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_CMNT", "name": "Manufacture of cement, lime and plaster"}
-      ]
-
-    :resheader Content-Type: application/json
-    :status 200: Activity found
-    :status 400: Bad request on client side (e.g., invalid parameters)
-    :status 404: Resource does not exist in the database
-    :status 500: Internal server error
-    :returns: :class:`flask.response_class`
-    """
-
 
     query = """
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -146,42 +76,7 @@ def getSearchActivityByUri(substring):
 
 #@app.route('/activities/', methods = ['GET'])
 def getActivities():
-    """Returns a list of activities contained in the BONSAI database.
-
-    .. :quickref: Activities list query; Get list of available activities.
-
-    **Example request**:
-
-    .. sourcecode:: http
-
-      GET /search_activities/ HTTP/1.1
-      Host: api.bonsai.uno
-      Accept: application/json
-
-    **Example response**:
-
-    .. sourcecode:: http
-
-      HTTP/1.1 200 OK
-      Vary: Accept
-      Content-Type: application/json
-
-      [
-          {"uri": "http://rdf.bonsai.uno/activitytype/core/eg", "label": "Electricity grid"},
-          {"uri": "http://rdf.bonsai.uno/activitytype/core/em", "label": "Market for electricity"},
-          {"uri": "http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_ALUM", "label": "Aluminium production"},
-          ...
-      ]
-
-    :query sort: sorts by alphabetical order, based on URI or label. Possible values: sort=uri, sort=label.
-    :query lim: limits the length of results, of type integer (e.g., 10). Possible values: between 0 and 1000. Defaults to 100.
-    :resheader Content-Type: application/json
-    :status 200: Activities found
-    :status 400: Bad request on client side (e.g., invalid parameters)
-    :status 404: Resource does not exist in the database
-    :status 500: Internal server error
-    :returns: :class:`flask.response_class`
-    """
+    
     lim = request.args.get('lim', 100)
 
     try:
@@ -225,66 +120,9 @@ def getActivities():
 
 """Activity relations query (**NOT IMPLEMENTED YET**)."""
 #@app.route('/activities/get_relations/<path:parameter>', methods = ['GET'])
-def getActivityRelations(parameter):
+def getActivityRelations(URI):
 
-    """Returns a list of activity flows that are *input of* and *output of* the specified activity.
-
-    .. :quickref: Flows list query; Get list of flows related to a specified activity.
-
-    **Example request**:
-
-    .. sourcecode:: http
-
-      GET /search_relations/http://rdf.bonsai.uno/activitytype/core/eg HTTP/1.1
-      Host: api.bonsai.uno
-      Accept: application/json
-
-    **Example response**:
-
-    .. sourcecode:: http
-
-      HTTP/1.1 200 OK
-      Vary: Accept
-      Content-Type: application/json
-
-      [
-          {
-            "uri": "http://rdf.bonsai.uno/activitytype/core/eg",
-            "label": "Electricity grid"
-          },
-          {
-            "isInputOf": [
-              {
-                "uri": "http://rdf.bonsai.uno/activitytype/core/someUri1",
-                "label": "Some label1"
-              },
-              {
-                "uri": "http://rdf.bonsai.uno/activitytype/core/someUri2",
-                "label": "Some label2"
-              }
-            ]
-          },
-          {
-            "isOutputOf": [
-              {
-                "uri": "http://rdf.bonsai.uno/activitytype/core/someUri1",
-                "label": "Some label3"
-              },
-              {
-                "uri": "http://rdf.bonsai.uno/activitytype/core/someUri2",
-                "label": "Some label4"
-              }
-            ]
-          }
-        ]
-
-    :resheader Content-Type: application/json
-    :status 200: Activity found
-    :status 400: Bad request on client side (e.g., invalid parameters)
-    :status 404: Resource does not exist in the database
-    :status 500: Internal server error
-    :returns: :class:`flask.response_class`
-    """
+    
     return abort(make_response(jsonify(message="Sorry, this resource is not yet implemented."), 404))
 
     """Requests LCA from the LCA calculation module (**NOT IMPLEMENTED YET**) and returns results (**NOT IMPLEMENTED YET**)."""
@@ -292,58 +130,7 @@ def getActivityRelations(parameter):
 #@app.route('/do_lca/', methods = ['POST'])
 def postDoLCA():
 
-    """Returns a list of impacts for one or several functional units specified.
 
-    .. :quickref: LCA results query; Get impacts for a specified functional unit.
-
-    **Example request**:
-
-    .. sourcecode:: http
-
-      POST /do_lca/ HTTP/1.1
-      Host: api.bonsai.uno
-
-    .. sourcecode:: http
-
-      GET /search_activities/ HTTP/1.1
-      Host: api.bonsai.uno
-      Accept: application/json
-
-
-    :reqheader Accept: application/json
-    :<json List[tuple] functional unit: specifies one or several functional units of format (string, float, string) (e.g., [("http://rdf.bonsai.uno/someUri1",1.0,"kilogram"), ("http://rdf.bonsai.uno/someUri2",1.0,"kilogram"),...])
-    :<json string method: specifies the impact method (e.g., "CML 2001")
-    :<json string algorithm: specifies the linking algorithm (e.g., "attributional")
-
-
-    **Example response**:
-
-    .. sourcecode:: http
-
-      HTTP/1.1 200 OK
-      Vary: Accept
-      Content-Type: application/json
-
-      [
-            {
-                "uri": "someURI",
-                "activityType": "sometype",
-                "label": "whatever",
-                "algorithm": "attributional",
-                "impacts":
-                        [
-                            { "impact_name": "GWP100a", "amount": 1.05, "unit":"kg CO2-eq." },
-                            { "impact_name": "Acidification potential", "amount": 1.02e-5, "unit":"kg SO2-eq." }
-                        ]
-            }
-        ]
-    :resheader Content-Type: application/json
-    :status 200: Activity found
-    :status 400: Bad request on client side (e.g., invalid parameters)
-    :status 404: Resource does not exist in the database
-    :status 500: Internal server error
-    :returns: :class:`flask.response_class`
-    """
     return abort(make_response(jsonify(message="Sorry, this resource is not yet implemented."), 404))
 
 from swagger_ui_bundle import swagger_ui_3_path

@@ -2,12 +2,13 @@ swagger: '2.0'
 info:
   version: 1.0.0
   title: bonsai_api
-  description: 'This is a simple API to serve queries to and from the BONSAI database as well as LCA results.  You can find out more about bonsai_api on the [Github page](https://github.com/BONSAMURAIS/bonsai_api).'
+  description: This is a simple API to serve queries to and from the BONSAI database as well as LCA results. You can find out more about bonsai_api on the [Github page](https://github.com/BONSAMURAIS/bonsai_api) and the main [BONSAI website](https://bonsai.uno/).
   contact:
     email: info@bonsai.uno
 host: '127.0.0.1:5000'
 schemes:
   - http
+  - https
 basePath: "/v1"
 consumes:
   - application/json
@@ -16,8 +17,8 @@ produces:
 paths:
   /activities/:
     get:
-      description: Fetches all available activities from the database
-      summary: getActivities
+      description: Fetches all available activities from the database in the form of JSON object, pairing URIs with labels.
+      summary: Fetches all available activities.
       tags:
         - activities
       operationId: bonsai_api.getActivities
@@ -34,7 +35,7 @@ paths:
           maximum: 1000
           exclusiveMaximum: false
           exclusiveMinimum: false
-          description: 'Set an optional length limit to the response between 1 and 1000, defaults to 100 if unspecified.'
+          description: Set an optional length limit to the response between 1 and 1000. It defaults to 100 if left unspecified.
         - name: sort
           in: query
           required: false
@@ -42,7 +43,7 @@ paths:
             - uri
             - label
           type: string
-          description: 'Define an alphabetical sorting option for the response (e.i., by label or uri), defaults to sorting by label name if unspecified.'
+          description: Defines an alphabetical sorting option for the response (e.i., by label or uri). It defaults to sorting by label name if left unspecified.
       responses:
         '200':
           description: Activities successfully fetched
@@ -59,8 +60,8 @@ paths:
           schema: {}
   /activities/by_label/{substring}:
     get:
-      description: Fetches one or several activities which label contains the specified substring
-      summary: getSearchActivity
+      description: Fetches one or several activities which label contains the specified substring.
+      summary: Search activities based on label.
       tags:
         - activities
       operationId: bonsai_api.getSearchActivityByLabel
@@ -87,7 +88,7 @@ paths:
   /activities/by_uri/{substring}:
     get:
       description: Fetches one or several activities which label contains the specified substring
-      summary: getSearchActivityByUri
+      summary: Search activities based on URI.
       tags:
         - activities
       operationId: bonsai_api.getSearchActivityByUri
@@ -113,7 +114,7 @@ paths:
           schema: {}
   /activities/get_relations/{URI}:
     get:
-      description: Returns the ingoing and outgoing flows of a specified activity
+      description: Returns the incoming and outgoing flows for a specific activity
       summary: getActivityRelations
       tags:
         - activities
@@ -126,7 +127,7 @@ paths:
           in: path
           required: true
           type: string
-          description: ''
+          description: The URI of the activity.
       responses:
         '200':
           description: Flows successfully fetched
@@ -136,25 +137,27 @@ paths:
               $ref: '#/definitions/activityRelation'
           headers: {}
         '404':
-          description: Resources cannot be found
+          description: Resources cannot be found.
           schema: {}
   /do_lca/:
     post:
-      description: Returns the results of a LCA calculation
+      description: Returns the results of a LCA calculation, given one or several functional units, an impact assessment method as well as a linking algorithm.
       summary: postDoLCA
+      consumes:
+        - application/json
       tags:
         - lca
       operationId: bonsai_api.postDoLCA
-      deprecated: false
-      produces:
-        - application/json
       parameters:
-        - name: body
-          in: body
-          required: true
-          description: Returns a list of impacts for a list of one or several functional units
+        - in: body
+          name: user
+          description: JSON structure for LCA request.
           schema:
-            type: object
+            title: lcaResult
+            type: array
+            items:
+              $ref: '#/definitions/lcaRequest'
+
       responses:
         '200':
           description: successful operation
@@ -185,41 +188,44 @@ definitions:
       isInputOf:
         type: array
         items:
-          $ref: '#/definitions/IsInputOf'
+          type: object
+          properties:
+            uri:
+                type: string
+            label:
+                type: string
       isOutputOf:
         type: array
         items:
-          $ref: '#/definitions/IsOutputOf'
-  Impacts:
-    title: Impacts
-    type: object
-    properties:
-      impact_name:
-        description: Name of the impact category
-        type: string
-      amount:
-        description: Amount
-        type: number
-        format: double
-      unit:
-        description: Indicator unit
-        type: string
-  IsInputOf:
-    title: IsInputOf
-    type: object
-    properties:
-      uri:
-        type: string
-      label:
-        type: string
-  IsOutputOf:
-    title: IsOutputOf
-    type: object
-    properties:
-      uri:
-        type: string
-      label:
-        type: string
+          type: object
+          properties:
+            uri:
+                type: string
+            label:
+                type: string
+  lcaRequest:
+    title: lcaRequest
+    type: array
+    items:
+      type: object
+      required:
+          - uri
+          - amount
+          - unit
+          - method
+          - algorithm
+      properties:
+          uri:
+              type: string
+          amount:
+              type: number
+          unit:
+              type: string
+          method:
+              type: string
+          algorithm:
+              type: string
+    
   lcaResult:
     title: lcaResult
     type: object
@@ -233,7 +239,18 @@ definitions:
       algorithm:
         type: string
       impacts:
-        $ref: '#/definitions/Impacts'
+        type: object
+        properties:
+          impact_name:
+            description: Name of the impact category
+            type: string
+          amount:
+            description: Amount
+            type: number
+            format: double
+          unit:
+            description: Indicator unit
+            type: string
   sort:
     title: sort
     example: uri
@@ -245,15 +262,15 @@ tags:
   - name: activities
     description: Fetch all or specific activities
     externalDocs:
-      url: 'http://swagger.io'
-      description: Find out more
+      url: 'https://bonsai.uno/'
+      description: Find out more about this resource
   - name: methods
     description: Fetch all or specific methods
     externalDocs:
-      url: 'http://swagger.io'
-      description: Find out more about our store
+      url: 'https://bonsai.uno/'
+      description: Find out more about this resource
   - name: lca
-    description: Performs LCA calculations
+    description: Retrieves LCA calculation results
 externalDocs:
   url: 'https://bonsai.uno/'
-  description: Find out more about BONSAI
+  description: Find out more about this resource
