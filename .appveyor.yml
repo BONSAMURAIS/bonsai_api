@@ -17,7 +17,7 @@ install:
   - python --version
   - conda config --set always_yes yes
   - conda update -y conda
-  - conda install -y -c conda-forge flask sparqlwrapper pytest pytest-cov coveralls
+  - conda install -y -c conda-forge flask sparqlwrapper pytest pytest-cov coveralls connexion
   - pip install connexion[swagger-ui]
   - pip install -e .
 
