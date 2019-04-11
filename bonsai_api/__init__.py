@@ -1,41 +1,20 @@
 import os
 from flask import Flask, request, make_response, abort, jsonify
 import connexion
-from connexion.resolver import RestyResolver
+
 
 from SPARQLWrapper import SPARQLWrapper, JSON
 import json
 
-app = connexion.FlaskApp(__name__)
-app.add_api('openapi-Swagger20.json', resolver=RestyResolver('bonsai_api'))
-
-#app = Flask(__name__, instance_relative_config=True)
-app.config.from_mapping(
-    SECRET_KEY='dev'
-)
-
-DATABASE='https://db.bonsai.uno/bonsai/query'
-test_config = None
-
-if test_config is None:
-    # load the instance config, if it exists, when not testing
-    app.config.from_pyfile('config.py', silent=True)
-else:
-    # load the test config if passed in
-    app.config.from_mapping(test_config)
 
 
 
-# ensure the instance folder exists
-try:
-    os.makedirs(app.instance_path)
-except OSError:
-    pass
+
 
 """Search for activities."""
 
-@app.route('/activities/by_label/<path:parameter>', methods = ['GET'])
-def getSearchActivityByLabel(parameter):
+
+def getSearchActivityByLabel(substring):
     """Returns a list of one or several activities in the BONSAI database for which the label contains the specified substring.
 
     .. :quickref: Search activities query; Get list of activities that match search criteria.
@@ -75,7 +54,7 @@ def getSearchActivityByLabel(parameter):
                 WHERE {
                     ?uri a <http://ontology.bonsai.uno/core#ActivityType>;
                     rdfs:label ?label
-                    FILTER(regex(str(?label), '"""+str(parameter)+"""' ) )
+                    FILTER(regex(str(?label), '"""+str(substring)+"""' ) )
                     }
         """
 
@@ -98,8 +77,8 @@ def getSearchActivityByLabel(parameter):
         abort(make_response(jsonify(message="The specified substring is not contained in any label."), 404))
 
 
-@app.route('/activities/by_uri/<path:parameter>', methods = ['GET'])
-def getSearchActivityByUri(parameter):
+
+def getSearchActivityByUri(substring):
     """Returns a list of one or several activities in the BONSAI database for which the URI contains the specified substring.
 
     .. :quickref: Search activities query; Get list of activities that match search criteria.
@@ -139,7 +118,7 @@ def getSearchActivityByUri(parameter):
                 WHERE {
                     ?uri a <http://ontology.bonsai.uno/core#ActivityType>;
                     rdfs:label ?label
-                    FILTER(regex(str(?uri), '"""+str(parameter)+"""' ) )
+                    FILTER(regex(str(?uri), '"""+str(substring)+"""' ) )
                     }
         """
 
@@ -164,7 +143,8 @@ def getSearchActivityByUri(parameter):
 # ActivityList
 # shows a list of all activities in the Bonsai db, with an optional limit
 
-@app.route('/activities/', methods = ['GET'])
+
+#@app.route('/activities/', methods = ['GET'])
 def getActivities():
     """Returns a list of activities contained in the BONSAI database.
 
@@ -244,7 +224,7 @@ def getActivities():
     return resp
 
 """Activity relations query (**NOT IMPLEMENTED YET**)."""
-@app.route('/activities/get_relations/<path:parameter>', methods = ['GET'])
+#@app.route('/activities/get_relations/<path:parameter>', methods = ['GET'])
 def getActivityRelations(parameter):
 
     """Returns a list of activity flows that are *input of* and *output of* the specified activity.
@@ -309,7 +289,7 @@ def getActivityRelations(parameter):
 
     """Requests LCA from the LCA calculation module (**NOT IMPLEMENTED YET**) and returns results (**NOT IMPLEMENTED YET**)."""
 
-@app.route('/do_lca/', methods = ['POST'])
+#@app.route('/do_lca/', methods = ['POST'])
 def postDoLCA():
 
     """Returns a list of impacts for one or several functional units specified.
@@ -365,4 +345,27 @@ def postDoLCA():
     :returns: :class:`flask.response_class`
     """
     return abort(make_response(jsonify(message="Sorry, this resource is not yet implemented."), 404))
+
+from swagger_ui_bundle import swagger_ui_3_path
+options = {'swagger_path': swagger_ui_3_path}
+
+
+connexion_app = connexion.App(__name__,  options=options)
+connexion_app.add_api('swagger.yaml', strict_validation=True)
+app = connexion_app.app
+
+
+app.config.from_mapping(
+    SECRET_KEY='dev'
+)
+
+DATABASE='https://db.bonsai.uno/bonsai/query'
+test_config = None
+
+if test_config is None:
+    # load the instance config, if it exists, when not testing
+    app.config.from_pyfile('config.py', silent=True)
+else:
+    # load the test config if passed in
+    app.config.from_mapping(test_config)
 

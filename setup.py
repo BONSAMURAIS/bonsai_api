@@ -38,7 +38,7 @@ setup(
         'appdirs',
         'docopt',
         'flask',
-        'flask-restful',
+        'connexion[swagger-ui]',
         'sparqlwrapper',
     ],
     tests_require = [
