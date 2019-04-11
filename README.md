@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/BONSAMURAIS/bonsai_api/badge.svg?branch=master)](https://coveralls.io/github/BONSAMURAIS/bonsai_api?branch=master) [![Build Status](https://travis-ci.org/BONSAMURAIS/bonsai_api.svg?branch=master)](https://travis-ci.org/BONSAMURAIS/bonsai_api) [![Build Status](https://ci.appveyor.com/api/projects/status/github/BONSAMURAIS/bonsai_api)](https://ci.appveyor.com/api/projects/status/github/BONSAMURAIS/bonsai_api)
+[![Coverage Status](https://coveralls.io/repos/github/BONSAMURAIS/bonsai_api/badge.svg?branch=master&service=github)](https://coveralls.io/github/BONSAMURAIS/bonsai_api?branch=master&service=github) [![Build Status](https://travis-ci.org/BONSAMURAIS/bonsai_api.svg?branch=master)](https://travis-ci.org/BONSAMURAIS/bonsai_api) [![Build Status](https://ci.appveyor.com/api/projects/status/github/BONSAMURAIS/bonsai_api)](https://ci.appveyor.com/api/projects/status/github/BONSAMURAIS/bonsai_api)
 
 # Bonsai API
 ## Documentation
