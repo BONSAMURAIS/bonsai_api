@@ -5,16 +5,24 @@
 See [API specifications](https://api.bonsai.uno/v1/ui/) and [documentation](https://bonsamurais.github.io/bonsai_api/build/html/index.html).
 
 ## What is it?
-This is a Flask API using Flask-RESTful that serves requests on the BONSAI graph database and LCA results.
+This is a Flask-based application programming interface (API) using representational state transfer (REST) using GET and POST methods to quickly and easily query the BONSAI graph database and serve LCA results.
 
-The idea is to give users easy-to-use endpoints to quickly query data from the BONSAI database but also seamlessly integrate LCA calculaiton routines in their own applications.
+The idea is to give users easy-to-use endpoints to quickly query data from the BONSAI database but also seamlessly integrate LCA calculation routines in their own applications.
 
 For example, using a Python interpreter:
 
     import requests
     r = requests.post('http://api.bonsai.uno/v1/do_lca/',
-        json={"functional unit": [("http://rdf.bonsai.uno/someUri1",1.0,"kilogram"), ("http://rdf.bonsai.uno/someUri2",1.0,"kilogram")],
-        "method":"CML 2001", "algorithm":"attributional"})
+        json=
+            {
+                "uri": "http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_CMNT",
+                "algorithm": "attributional",
+                "unit": "kilogram",
+                "amount": 1.0,
+                "method": "CML 2001"
+             }
+        
+        )
     r.json()
     
 would output:
@@ -25,10 +33,10 @@ would output:
         "uri":"http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_CMNT",
         "activityType":"",
         "algorithm": "attributional",
-        "impacts":	{
+        "impacts": {
                 "amount":650.8,
-                "impact_name":	"GWP100a",
-                "unit":	"kg CO2-eq."
+                "impact_name": "GWP100a",
+                "unit": "kg CO2-eq."
             }
         }
     ]
@@ -36,8 +44,8 @@ would output:
     
 
 We foresee **bonsai_api** to work together with:
-* **bonsai_web_app**, a server-based LCA calculation module that receives requests from bonsai_api,
-* **bonsai_web_interface**, a graphical user interface to make and visualize LCA calculations
+* **bonsai_app**, ([https://app.bonsai.uno](https://app.bonsai.uno)) a server-based LCA calculation module that receives requests from bonsai_api,
+* **bonsai_UI**, ([https://ui.bonsai.uno](https://ui.bonsai.uno)) a web-based graphical user interface to request and visualize LCA calculations
 * **the BONSAI database**
 
 
