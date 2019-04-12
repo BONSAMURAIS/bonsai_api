@@ -20,7 +20,7 @@ For example, using a Python interpreter:
 would output:
 ```json
     [
-      {"uri": "http://rdf.bonsai.uno/someUri1", "label": "Electricity production, coal"}: {
+      {"uri": "http://rdf.bonsai.uno/someUri1", "label": "Electricity production, coal"}, {
         "Global Warming Potential 100a": [
             {"impact": 0.102, "unit": "kg CO2-eq."}
         ],
@@ -28,7 +28,7 @@ would output:
             {"impact": 1.2e-5, "unit": "kg SO2-eq."}
         ]
       },
-      {"uri": "http://rdf.bonsai.uno/someUri2", "label": "Electricity production, nuclear"}: {
+      {"uri": "http://rdf.bonsai.uno/someUri2", "label": "Electricity production, nuclear"}, {
         "Global Warming Potential 100a": [
             {"impact": 0.02, "unit": "kg CO2-eq."}
         ],
