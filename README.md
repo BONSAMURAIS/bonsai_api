@@ -89,7 +89,7 @@ Running on another port (say, 8080) on the host, and displaying DEBUG logs from 
     docker run -e GUNICORN_CMD_ARGS="--log-level DEBUG" -p 8080:5000 bonsai_api
 
 
-Running the application as a docker and naming the container `bonsai_api`:
+Running the application as a docker container and naming the container `bonsai_api`:
 
     docker run -d --name bonsai_api -e GUNICORN_CMD_ARGS="--log-level DEBUG" -p 8080:5000 bonsai_api
 
