@@ -9,6 +9,35 @@ import json
 
 """Search for activities."""
 def getSearchActivityByLabel(substring):
+    """Returns a list of one or several activities in the BONSAI database for which the label contains the specified substring.
+    
+    .. :quickref: Search activities query; Get list of activities that match search criteria.
+    
+    **Example request**:
+    
+    .. sourcecode:: http
+    
+      GET /v1/activities/by_label/alu HTTP/1.1
+      Host: https://api.bonsai.uno
+      Accept: application/json
+      
+    **Example response**:
+    
+    .. sourcecode:: http
+    
+      HTTP/1.1 200 OK
+      Vary: Accept
+      Content-Type: application/json
+        [
+            {"uri": "http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_ALUO", "label": "Mining of aluminium ores and concentrates"}, {"uri": "http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_ALUW", "label": "Re-processing of secondary aluminium into new aluminium"}
+        ]
+
+    :resheader Content-Type: application/json
+    :status 200: Activity found
+    :status 404: Resource does not exist in the database
+    :status 500: Internal server error
+    :returns: :class:`flask.response_class`
+    """
 
     query = """
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -41,6 +70,36 @@ def getSearchActivityByLabel(substring):
 
 
 def getSearchActivityByUri(substring):
+    
+    """Returns a list of one or several activities in the BONSAI database for which the URI contains the specified substring.
+    
+    .. :quickref: Search activities query; Get list of activities that match search criteria.
+    
+    **Example request**:
+    
+    .. sourcecode:: http
+    
+      GET /v1/activities/by_uri/ALU HTTP/1.1
+      Host: https://api.bonsai.uno
+      Accept: application/json
+      
+    **Example response**:
+    
+    .. sourcecode:: http
+    
+      HTTP/1.1 200 OK
+      Vary: Accept
+      Content-Type: application/json
+        [
+            {"uri": "http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_ALUO", "label": "Mining of aluminium ores and concentrates"}, {"uri": "http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_ALUW", "label": "Re-processing of secondary aluminium into new aluminium"}
+        ]
+
+    :resheader Content-Type: application/json
+    :status 200: Activity found
+    :status 404: Resource does not exist in the database
+    :status 500: Internal server error
+    :returns: :class:`flask.response_class`
+    """
 
     query = """
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -76,6 +135,39 @@ def getSearchActivityByUri(substring):
 
 #@app.route('/activities/', methods = ['GET'])
 def getActivities():
+    """Returns a list of activities contained in the BONSAI database.
+    
+    .. :quickref: Activities list query; Get list of available activities.
+    
+    **Example request**:
+    
+    .. sourcecode:: http
+    
+      GET /v1/activities/ HTTP/1.1
+      Host: https://api.bonsai.uno
+      Accept: application/json
+      
+    **Example response**:
+    
+    .. sourcecode:: http
+    
+      HTTP/1.1 200 OK
+      Vary: Accept
+      Content-Type: application/json
+      [
+        {"uri": "http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_FAUX", "label": "Activities auxiliary to financial intermediation (67)"},
+        {"uri": "http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_ORGA", "label": "Activities of membership organisation n.e.c. (91)"},
+        {"uri": "http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_TAIR", "label": "Air transport (62)"}
+      ]
+    :query sort: sorts by alphabetical order, based on URI or label. Possible values: sort=uri, sort=label.
+    :query lim: limits the length of results, of type integer (e.g., 10). Possible values: between 0 and 1000. Defaults to 100.
+    :resheader Content-Type: application/json
+    :status 200: Activities found
+    :status 400: Bad request on client side (e.g., invalid parameters)
+    :status 404: Resource does not exist in the database
+    :status 500: Internal server error
+    :returns: :class:`flask.response_class`
+    """
     
     lim = request.args.get('lim', 100)
 
@@ -121,6 +213,50 @@ def getActivities():
 """Activity relations query (**NOT IMPLEMENTED YET**)."""
 #@app.route('/activities/get_relations/<path:parameter>', methods = ['GET'])
 def getActivityRelations(URI):
+    """Returns a list of activity flows that are *input of* and *output of* the specified activity.
+    
+    .. :quickref: Flows list query; Get list of flows related to a specified activity.
+    
+    **Example request**:
+    
+    .. sourcecode:: http
+    
+      GET /v1/activities/get_relations/http://rdf.bonsai.uno/activitytype/core/eg HTTP/1.1
+      Host: https://api.bonsai.uno
+      Accept: application/json
+      
+    **Example response**:
+    
+    .. sourcecode:: http
+    
+      HTTP/1.1 200 OK
+      Vary: Accept
+      Content-Type: application/json
+      [
+          {
+            "isInputOf": [
+              {
+                "label": "some label",
+                "uri": "some URI"
+              }
+            ],
+            "isOutputOf": [
+              {
+                "label": "some other label",
+                "uri": "some other URI"
+              }
+            ],
+            "label": "Electricity grid",
+            "uri": "http://rdf.bonsai.uno/activitytype/core/eg"
+          }
+        ]
+    :resheader Content-Type: application/json
+    :status 200: Activity found
+    :status 400: Bad request on client side (e.g., invalid parameters)
+    :status 404: Resource does not exist in the database
+    :status 500: Internal server error
+    :returns: :class:`flask.response_class`
+    """
 
     
     return abort(make_response(jsonify(message="Sorry, this resource is not yet implemented."), 404))
@@ -129,6 +265,59 @@ def getActivityRelations(URI):
 
 #@app.route('/do_lca/', methods = ['POST'])
 def postDoLCA():
+    """Returns a list of impacts for one or several functional units specified.
+    
+    .. :quickref: LCA results query; Get impacts for a specified functional unit.
+    
+    **Example request**:
+    
+    .. sourcecode:: http
+    
+      POST /v1/do_lca/ HTTP/1.1
+      Host: https://api.bonsai.uno
+
+
+    :reqheader Accept: application/json
+    :<json string URI: specifies the URI of the activity
+    :<json number amount: specifies the amount of the reference flow
+    :<json string unit: specifies the unit of the reference flow
+    :<json string method: specifies the impact method (e.g., "CML 2001")
+    :<json string algorithm: specifies the linking algorithm (e.g., "attributional")
+
+    **Example response**:
+    
+    .. sourcecode:: http
+    
+      HTTP/1.1 200 OK
+      Vary: Accept
+      Content-Type: application/json
+      [
+          {"uri": "http://rdf.bonsai.uno/someUri1", "label": "Electricity production, coal"}: {
+            "Global Warming Potential 100a": [
+                {"impact": 0.102, "unit": "kg CO2-eq."}
+            ],
+            "Acidification": [
+                {"impact": 1.2e-5, "unit": "kg SO2-eq."}
+            ]
+
+          },
+          {"uri": "http://rdf.bonsai.uno/someUri2", "label": "Electricity production, nuclear"}: {
+            "Global Warming Potential 100a": [
+                {"impact": 0.02, "unit": "kg CO2-eq."}
+            ],
+            "Acidification": [
+                {"impact": 1.2e-2, "unit": "kg SO2-eq."}
+            ]
+
+          }
+      ]
+    :resheader Content-Type: application/json
+    :status 200: Activity found
+    :status 400: Bad request on client side (e.g., invalid parameters)
+    :status 404: Resource does not exist in the database
+    :status 500: Internal server error
+    :returns: :class:`flask.response_class`
+    """
 
 
     return abort(make_response(jsonify(message="Sorry, this resource is not yet implemented."), 404))
