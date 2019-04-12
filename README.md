@@ -13,8 +13,16 @@ For example, using a Python interpreter:
 
     import requests
     r = requests.post('http://api.bonsai.uno/v1/do_lca/',
-        json={"functional unit": [("http://rdf.bonsai.uno/someUri1",1.0,"kilogram"), ("http://rdf.bonsai.uno/someUri2",1.0,"kilogram")],
-        "method":"CML 2001", "algorithm":"attributional"})
+        json=
+        {
+            "uri":	"http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_CMNT",
+            "algorithm": "attributional",
+            "unit":	"kilogram",
+            "amount":	1.0,
+            "method":	"CML 2001"
+         }
+        
+        )
     r.json()
     
 would output:
