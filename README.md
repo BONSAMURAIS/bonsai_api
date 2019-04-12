@@ -14,13 +14,13 @@ For example, using a Python interpreter:
     import requests
     r = requests.post('http://api.bonsai.uno/v1/do_lca/',
         json=
-        {
-            "uri":	"http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_CMNT",
-            "algorithm": "attributional",
-            "unit":	"kilogram",
-            "amount": 1.0,
-            "method": "CML 2001"
-         }
+            {
+                "uri": "http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_CMNT",
+                "algorithm": "attributional",
+                "unit": "kilogram",
+                "amount": 1.0,
+                "method": "CML 2001"
+             }
         
         )
     r.json()
@@ -33,10 +33,10 @@ would output:
         "uri":"http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_CMNT",
         "activityType":"",
         "algorithm": "attributional",
-        "impacts":	{
+        "impacts": {
                 "amount":650.8,
-                "impact_name":	"GWP100a",
-                "unit":	"kg CO2-eq."
+                "impact_name": "GWP100a",
+                "unit": "kg CO2-eq."
             }
         }
     ]
