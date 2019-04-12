@@ -2,7 +2,7 @@
 
 # Bonsai API
 ## Documentation
-See [documentation](https://bonsamurais.github.io/bonsai_api/build/html/index.html).
+See [API specifications](https://api.bonsai.uno/v1/ui/) and [documentation](https://bonsamurais.github.io/bonsai_api/build/html/index.html).
 
 ## What is it?
 This is a Flask API using Flask-RESTful that serves requests on the BONSAI graph database and LCA results.
@@ -26,11 +26,10 @@ would output:
         "activityType":"",
         "algorithm": "attributional",
         "impacts":	{
-                "amount":	650,
+                "amount":650.8,
                 "impact_name":	"GWP100a",
                 "unit":	"kg CO2-eq."
             }
-        
         }
     ]
 ```
