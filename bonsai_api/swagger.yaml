@@ -7,7 +7,6 @@ info:
     email: info@bonsai.uno
 host: 'api.bonsai.uno'
 schemes:
-  - http
   - https
 basePath: "/v1"
 consumes:
