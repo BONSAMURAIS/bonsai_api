@@ -5,7 +5,7 @@ info:
   description: This is a simple API to serve queries to and from the BONSAI database as well as LCA results. You can find out more about bonsai_api on the [Github page](https://github.com/BONSAMURAIS/bonsai_api) and the main [BONSAI website](https://bonsai.uno/).
   contact:
     email: info@bonsai.uno
-host: 'https://api.bonsai.uno'
+host: 'api.bonsai.uno'
 schemes:
   - http
   - https
