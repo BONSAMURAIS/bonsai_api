@@ -26,11 +26,10 @@ would output:
         "activityType":"",
         "algorithm": "attributional",
         "impacts":	{
-                "amount":	650,
+                "amount":650.8,
                 "impact_name":	"GWP100a",
                 "unit":	"kg CO2-eq."
             }
-        
         }
     ]
 ```
