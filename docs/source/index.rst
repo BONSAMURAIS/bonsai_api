@@ -16,13 +16,13 @@ From a Python environment, querying the first 5 activities in the BONSAI databas
     .. code-block:: python
 
         import requests
-        r = requests.get('https://api.bonsai.uno/activities/', params = {'lim':5, "sort":"label"})
+        r = requests.get('https://api.bonsai.uno/v1/activities/', params = {'lim':5, "sort":"label"})
         r.json()
         
 Or from a console, for example using curl:
     .. code-block:: console
         
-        curl https://api.bonsai.uno/activities/?lim=5&sort=label
+        curl https://api.bonsai.uno/v1/activities/?lim=5&sort=label
 
 Both would print out:
 
