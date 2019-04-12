@@ -18,8 +18,8 @@ For example, using a Python interpreter:
             "uri":	"http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_CMNT",
             "algorithm": "attributional",
             "unit":	"kilogram",
-            "amount":	1.0,
-            "method":	"CML 2001"
+            "amount": 1.0,
+            "method": "CML 2001"
          }
         
         )
