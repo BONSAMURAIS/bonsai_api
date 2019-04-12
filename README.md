@@ -74,7 +74,42 @@ Or if you are using the master branch, install Flask from source before installi
     pip install -e .
 
 ## Run
-Linux/MacOS
+
+### Docker
+
+The docker image uses [gunicorn](https://gunicorn.org/) to serve the application.
+
+Build the image with:
+
+    docker build . -t bonsai_api
+
+The minimal command line to run the image would look like:
+
+    docker run -p 5000:5000 bonsai_api
+
+
+Running on another port (say, 8080) on the host, and displaying DEBUG logs from gunicorn:
+
+    docker run -e GUNICORN_CMD_ARGS="--log-level DEBUG" -p 8080:5000 bonsai_api
+
+
+Running the application as a docker and naming the container `bonsai_api`:
+
+    docker run -d --name bonsai_api -e GUNICORN_CMD_ARGS="--log-level DEBUG" -p 8080:5000 bonsai_api
+
+To see the output logs from this conatiner:
+
+    docker logs bonsai_api
+
+To _follow_ the logs from the container (must do `CTL-C` to stop the logs from showing in the terminal, *but* the service will continue to run!)
+
+    docker logs -f bonsai_api
+
+To stop the background service:
+    
+    docker stop bonsai_api
+
+### Linux/MacOS
 
 Set the environment variables
 
@@ -85,7 +120,7 @@ Run local server
     
     flask run
 
-Or on Windows cmd
+### Windows cmd
 
     set FLASK_APP=bonsai_api
     set FLASK_ENV=development
