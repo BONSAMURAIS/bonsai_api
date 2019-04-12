@@ -27,7 +27,7 @@ would output:
         "algorithm": "attributional",
         "impacts":	{
                 "amount":	650,
-                "impact_name":	GWP100a,
+                "impact_name":	"GWP100a",
                 "unit":	"kg CO2-eq."
             }
         
