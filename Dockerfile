@@ -12,4 +12,4 @@ COPY . /app
 
 RUN pip install gunicorn
 RUN pip install -e .
-ENTRYPOINT gunicorn -b :5000 bonsai_api:"create_app()"
+ENTRYPOINT gunicorn -b :5000 bonsai_api:app
