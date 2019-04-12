@@ -12,7 +12,7 @@ The idea is to give users easy-to-use endpoints to quickly query data from the B
 For example, using a Python interpreter:
 
     import requests
-    r = requests.post('http://api.bonsai.uno/do_lca/',
+    r = requests.post('http://api.bonsai.uno/v1/do_lca/',
         json={"functional unit": [("http://rdf.bonsai.uno/someUri1",1.0,"kilogram"), ("http://rdf.bonsai.uno/someUri2",1.0,"kilogram")],
         "method":"CML 2001", "algorithm":"attributional"})
     r.json()
@@ -20,22 +20,18 @@ For example, using a Python interpreter:
 would output:
 ```json
     [
-      {"uri": "http://rdf.bonsai.uno/someUri1", "label": "Electricity production, coal"}, {
-        "Global Warming Potential 100a": [
-            {"impact": 0.102, "unit": "kg CO2-eq."}
-        ],
-        "Acidification": [
-            {"impact": 1.2e-5, "unit": "kg SO2-eq."}
-        ]
-      },
-      {"uri": "http://rdf.bonsai.uno/someUri2", "label": "Electricity production, nuclear"}, {
-        "Global Warming Potential 100a": [
-            {"impact": 0.02, "unit": "kg CO2-eq."}
-        ],
-        "Acidification": [
-            {"impact": 1.2e-2, "unit": "kg SO2-eq."}
-        ]
-      }
+      {
+        "label":"Manufacture of cement, lime and plaster",
+        "uri":"http://rdf.bonsai.uno/activitytype/exiobase3_3_17/A_CMNT",
+        "activityType":"",
+        "algorithm": "attributional",
+        "impacts":	{
+                "amount":	650,
+                "impact_name":	GWP100a,
+                "unit":	"kg CO2-eq."
+            }
+        
+        }
     ]
 ```
     
