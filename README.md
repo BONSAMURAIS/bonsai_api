@@ -42,7 +42,7 @@ We foresee **bonsai_api** to work together with:
 * **the BONSAI database**
 
 
-![alt text](https://github.com/BONSAMURAIS/bonsai_api/blob/master/docs/bonsai_app_flow_diagram.png)
+![alt text](https://github.com/BONSAMURAIS/bonsai_api/blob/master/bonsai_app_flow_diagram.png)
 
 
 ## Install
